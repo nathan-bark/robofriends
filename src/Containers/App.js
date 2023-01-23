@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import Cardlist from "./CardList";
-import SearchBox from "./SearchBox";
-import { useEffect } from "react";
+import Cardlist from '../Components/CardList';
+import SearchBox from "../Components/SearchBox";
+import Scroll from '../Components/Scroll';
 
 function App() {
   const [currentRobots, setRobots] = useState([]);
@@ -22,13 +22,23 @@ function App() {
     return robot.name.toLowerCase().includes(searchField.toLowerCase());
   });
 
-  return (
+  if (!currentRobots){
+    return <h1>Loading...</h1>
+  }
+  else {
+     return (
     <div className="tc">
       <h1 className="f1 ">Robofriends</h1>
       <SearchBox searchField={searchField} searchChange={onSearchChange} />
-      <Cardlist robots={filteredRobots} />;
+      <Scroll>
+        <Cardlist robots={filteredRobots} />;
+      </Scroll>
+      
     </div>
   );
+  }
+
+ 
 }
 
 export default App;
